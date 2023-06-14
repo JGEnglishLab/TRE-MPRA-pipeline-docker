@@ -138,6 +138,6 @@ command = f"{sudo_option} docker run -i -v " \
           f"samhimes92/tmp TMP_empirical.py -f /mydata/fq_files -t /mydata/treatements.tsv " \
           f"{dna_tsv_flag} {spike_flag} {dna_fq_flag} {pattern_flag} {dir_name} {thread_flag}"
 print(command)
-# os.system(command)
+os.system(command)
 
 
