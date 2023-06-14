@@ -8,22 +8,26 @@ parser = argparse.ArgumentParser(
 
 parser.add_argument('-po', '--pairwise_output', dest="pairwise_output", required=True)
 parser.add_argument('-mo', '--multi_output', dest="multi_output", required=True)
-
 parser.add_argument('-r', '--runs_dir', dest="runs_dir", required=True) #The directory that has all the runs
-
 parser.add_argument('-p', '--pairwise_tsv', dest="pairwise_comps", required=False)
 parser.add_argument('-m', '--multi_tsv', dest="multi_comps", required=False)
 parser.add_argument('-n', '--n_workers', dest="threads", required=False)
+parser.add_argument('--sudo', action='store_true')
 
 
 args = parser.parse_args()
 multi_output=args.multi_output
 pairwise_output=args.pairwise_output
-
 runs_dir=args.runs_dir
 pairwise_comps=args.pairwise_comps
 multi_comps=args.multi_comps
 threads=args.threads
+
+
+if args.sudo:
+    sudo_option = "sudo"
+else:
+    sudo_option = ""
 
 
 if pairwise_comps:
@@ -90,10 +94,10 @@ else:
 
 
 
-command = f"docker run -i -v " \
+command = f"{sudo_option} docker run -i -v " \
           f"{multi_output}:/app/multi_results -v {pairwise_output}:/app/pairwise_results -v {runs_dir}:/mydata/runs " \
           f"{pairwise_tsv_mount} {multi_tsv_mount} " \
-          f"tmp TMP_comparative.py -r /mydata/runs/ " \
+          f"samhimes92/tmp TMP_comparative.py -r /mydata/runs/ " \
           f"{multi_tsv_flag} {pairwise_tsv_flag} {thread_flag}"
 print(command)
 os.system(command)

@@ -16,6 +16,10 @@ parser.add_argument('-dt', '--path_to_dna_tsv', dest="dna_tsv_path", required=Fa
 parser.add_argument('-s', '--path_to_spikein_file', dest="spike_path", required=False)
 parser.add_argument('-sr', '--sample_number_regex', dest="pattern", required=False)
 parser.add_argument('-d', '--path_to_DNA_fastq', dest="dna_path", required=False)
+parser.add_argument('-n', '--n_workers', dest="threads", required=False)
+parser.add_argument('--sudo', action='store_true')
+
+
 
 
 args = parser.parse_args()
@@ -27,6 +31,22 @@ dna_tsv_path=args.dna_tsv_path
 pattern=args.pattern
 dna_path=args.dna_path
 spike_path=args.spike_path
+threads=args.threads
+
+if args.sudo:
+    sudo_option = "sudo"
+else:
+    sudo_option = ""
+
+if threads:
+    if not threads.isnumeric():
+        print("Number of threads (-n --n_workers) must be numeric")
+        exit()
+    else:
+        thread_flag = f"-n {threads}"
+else:
+    thread_flag = ""
+
 
 #Checks if they added a dir name
 if dir_name:
@@ -112,12 +132,12 @@ else:
 
 
 
-command = f"docker run -i -v " \
+command = f"{sudo_option} docker run -i -v " \
           f"{emp_output}:/app/runs -v {fastq_path}:/mydata/fq_files -v {treatment_tsv_path}:/mydata/treatements.tsv " \
           f"{dna_tsv_mount} {spike_mount} {dna_fq_mount} " \
-          f"tmp TMP_empirical.py -f /mydata/fq_files -t /mydata/treatements.tsv " \
-          f"{dna_tsv_flag} {spike_flag} {dna_fq_flag} {pattern_flag} {dir_name} "
+          f"samhimes92/tmp TMP_empirical.py -f /mydata/fq_files -t /mydata/treatements.tsv " \
+          f"{dna_tsv_flag} {spike_flag} {dna_fq_flag} {pattern_flag} {dir_name} {thread_flag}"
 print(command)
-os.system(command)
+# os.system(command)
 
 
