@@ -1,27 +1,30 @@
 import argparse
+from argparse import RawTextHelpFormatter
 import os
+import help_txt as ht
 
 cwd = os.getcwd()
 
 parser = argparse.ArgumentParser(
-                    description = 'Runs Docker container')
+    formatter_class=RawTextHelpFormatter, description="Runs Docker container"
+)
 
-parser.add_argument('-po', '--pairwise_output', dest="pairwise_output", required=True)
-parser.add_argument('-mo', '--multi_output', dest="multi_output", required=True)
-parser.add_argument('-r', '--runs_dir', dest="runs_dir", required=True) #The directory that has all the runs
-parser.add_argument('-p', '--pairwise_tsv', dest="pairwise_comps", required=False)
-parser.add_argument('-m', '--multi_tsv', dest="multi_comps", required=False)
-parser.add_argument('-n', '--n_workers', dest="threads", required=False)
-parser.add_argument('--sudo', action='store_true')
+parser.add_argument("-po", required=True, help=ht.po())
+parser.add_argument("-mo", required=True, help=ht.mo())
+parser.add_argument("-r", required=True, help=ht.r_comparative_docker())  # The directory that has all the runs
+parser.add_argument("-p", required=False, help=ht.p())
+parser.add_argument("-m", required=False, help=ht.m())
+parser.add_argument("-n", required=False, help=ht.n())
+parser.add_argument("--sudo", action="store_true", help=ht.sudo())
 
 
 args = parser.parse_args()
-multi_output=args.multi_output
-pairwise_output=args.pairwise_output
-runs_dir=args.runs_dir
-pairwise_comps=args.pairwise_comps
-multi_comps=args.multi_comps
-threads=args.threads
+multi_output = vars(args)["mo"]
+pairwise_output = vars(args)["po"]
+runs_dir = vars(args)["r"]
+pairwise_comps = vars(args)["p"]
+multi_comps = vars(args)["m"]
+threads = vars(args)["n"]
 
 
 if args.sudo:
@@ -65,7 +68,7 @@ else:
     thread_flag = ""
 
 
-#Check path to run output
+# Check path to run output
 if not os.path.exists(pairwise_output):
     print("Path to pairwise output (-po --pairwise_output) doesn't exist")
     exit()
@@ -74,7 +77,7 @@ else:
     pairwise_output = os.getcwd()
     os.chdir(cwd)
 
-#Check path to run output
+# Check path to run output
 if not os.path.exists(multi_output):
     print("Path to multi output (-mo --multi_output) doesn't exist")
     exit()
@@ -83,7 +86,7 @@ else:
     multi_output = os.getcwd()
     os.chdir(cwd)
 
-#Check path to run output
+# Check path to run output
 if not os.path.exists(runs_dir):
     print("Path to run directory (-r --runs_dir) doesn't exist")
     exit()
@@ -93,13 +96,12 @@ else:
     os.chdir(cwd)
 
 
-
-command = f"{sudo_option} docker run -i -v " \
-          f"{multi_output}:/app/multi_results -v {pairwise_output}:/app/pairwise_results -v {runs_dir}:/mydata/runs " \
-          f"{pairwise_tsv_mount} {multi_tsv_mount} " \
-          f"samhimes92/tmp TMP_comparative.py -r /mydata/runs/ " \
-          f"{multi_tsv_flag} {pairwise_tsv_flag} {thread_flag}"
+command = (
+    f"{sudo_option} docker run -i -v "
+    f"{multi_output}:/app/multi_results -v {pairwise_output}:/app/pairwise_results -v {runs_dir}:/mydata/runs "
+    f"{pairwise_tsv_mount} {multi_tsv_mount} "
+    f"samhimes92/tmp TMP_comparative.py -r /mydata/runs/ "
+    f"{multi_tsv_flag} {pairwise_tsv_flag} {thread_flag}"
+)
 print(command)
 os.system(command)
-
-
