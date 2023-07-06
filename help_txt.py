@@ -13,7 +13,7 @@ def f():
     The path may be absolute or direct
     The fastq files inside the directory may be ".fq", ".fastq", ".fq.gz", or ".fastq.gz" files
 
-    e.g. "-f ../sequence_data/19919_fq_files"
+    e.g. "-f ../sequence_data/19919_fq_files/"
     """
 
 
@@ -41,13 +41,12 @@ def t():
     8   DNA
 
     e.g. "-t ../19919_treatments.tsv
-
     """
 
 
 def dt():
     return """
-    Takes a path to the dna TSV
+    Takes a path to the DNA TSV
     The path may be absolute or direct
     DNA TSV is only required if more than one DNA sample is present in treatment TSV
     The DNA TSV is used to specify which DNA samples correspond to which RNA samples
@@ -55,8 +54,6 @@ def dt():
     The first column corresponds to DNA sample numbers, the second column corresponds to RNA sample numbers
     Each RNA sample must correspond to 1 and only 1 DNA sample
     If you had a treatment TSV that looked like the one above (see -t) you would create a DNA TSV like the one below
-
-    See example of TSV below
 
     6   1
     6   2
@@ -112,7 +109,7 @@ def d():
     This flag is only necessary if the directory specified by -f doesn't contain all the fastq files
     Use this flag to specify the path to the directory containing the fastq files for your DNA fastq files
 
-    e.g. "-d ../sequence_data/19919_dna_fq_files
+    e.g. "-d ../sequence_data/19919_dna_fq_files/"
     """
 
 
@@ -152,7 +149,7 @@ def p():
     id  base_treatment	stim_treatment	base_run	stim_run`
 
     The id column should just contain a unique integer for each row
-
+    
     See example below
 
     id	base_treatment	stim_treatment	base_run	stim_run
@@ -172,7 +169,9 @@ def m():
     If this flag is left blank TMP_comparative.py will ask for user input to create the TSV
     If you make your own tsv you must use this header 
 
-    id	treatment	run The id column should be used to specify the multivariate comparisons, for example if you 
+    id	treatment	run 
+    
+    The id column should be used to specify the multivariate comparisons, for example if you 
     wanted to compare treatments A, B and C against each other, you would give them all the same id - See example below
 
 
@@ -192,15 +191,7 @@ def m():
     """
 
 
-def r_comparative():
-    return """
-    Takes a path to the directory that contains the output directories from TMP_empirical.py
-    The path may be absolute or direct
-    Default = "./runs/"
-    Unless you are running this script with the docker image runner, you should just leave blank
 
-    e.g. "-r ../runs_output/"
-    """
 
 def sudo():
     return"""
@@ -210,7 +201,7 @@ def sudo():
 def ro():
     return """
     Takes a path to a directory where you want the run results to be written
-    The path to the directory can be direct or absolute.
+    The path to the directory can be direct or absolute
     If you are planning on running this multiple times you should store all the results in the same directory
     
     e.g. "-ro ../my_empirical_results/"
@@ -234,7 +225,7 @@ def mo():
 
 def r_comparative_docker():
     return"""
-    Takes a path to the directory that stores all the run output from TMP_empirical_docker.py
+    Takes a path to the directory that holds all the run output from TMP_empirical_docker.py
     The path can be absolute or direct
     Note this should be the same directory specified by the -ro flag from TMP_empirical_docker.py
     
