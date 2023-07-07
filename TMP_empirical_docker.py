@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import argparse
 from argparse import RawTextHelpFormatter
 import os
@@ -27,7 +28,7 @@ dir_name = vars(args)["r"]
 fastq_path = vars(args)["f"]
 treatment_tsv_path = vars(args)["t"]
 dna_tsv_path = vars(args)["dt"]
-pattern = vars(args)["p"]
+pattern = vars(args)["sr"]
 dna_path = vars(args)["d"]
 spike_path = vars(args)["s"]
 threads = vars(args)["n"]
