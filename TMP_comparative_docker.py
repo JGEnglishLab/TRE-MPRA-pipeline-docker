@@ -10,8 +10,8 @@ parser = argparse.ArgumentParser(
     formatter_class=RawTextHelpFormatter, description="Runs Docker container"
 )
 
-parser.add_argument("-po", required=True, help=ht.po())
-parser.add_argument("-mo", required=True, help=ht.mo())
+parser.add_argument("-po", required=False, default = "./", help=ht.po())
+parser.add_argument("-mo", required=False, default = "./", help=ht.mo())
 parser.add_argument("-r", required=True, help=ht.r_comparative_docker())  # The directory that has all the runs
 parser.add_argument("-p", required=False, help=ht.p())
 parser.add_argument("-m", required=False, help=ht.m())
@@ -26,6 +26,19 @@ runs_dir = vars(args)["r"]
 pairwise_comps = vars(args)["p"]
 multi_comps = vars(args)["m"]
 threads = vars(args)["n"]
+
+def check_output_dir(dir, type):
+    if not os.path.exists(dir):
+        if type == "pairwise":
+            print("Path to pairwise output (-po --pairwise_output) doesn't exist")
+        elif type == "multi":
+            print("Path to multi output (-mo --multi_output) doesn't exist")
+        exit()
+    else:
+        os.chdir(dir)
+        abs_dir_path = os.getcwd()
+        os.chdir(cwd)
+        return abs_dir_path
 
 
 if args.sudo:
@@ -68,8 +81,7 @@ if threads:
 else:
     thread_flag = ""
 
-
-# Check path to run output
+#Check path to run output
 if not os.path.exists(pairwise_output):
     print("Path to pairwise output (-po --pairwise_output) doesn't exist")
     exit()

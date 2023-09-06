@@ -211,7 +211,8 @@ def po():
     return"""
     Takes a path to a directory where you want the pairwise results to be written
     The path can be absolute or direct
-    
+    If not provided, results will be written to current working directory
+
     e.g. "-po ../my_pairwise_results/
     """
 
@@ -219,6 +220,7 @@ def mo():
     return"""
     Takes a path to a directory where you want the multivariate results to be written
     The path can be absolute or direct
+    If not provided, results will be written to current working directory
     
     e.g. "-mo ../my_multi_results/"
     """
