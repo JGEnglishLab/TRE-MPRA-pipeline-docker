@@ -134,7 +134,7 @@ if ignore_path:
     else:
         ignore_path = os.path.abspath(ignore_path)
         ignore_mount = f"-v {ignore_path}:/mydata/ignore.txt"
-        ignore_flag = "-s /mydata/ignore.txt"
+        ignore_flag = "-i /mydata/ignore.txt"
 else:
     ignore_mount = ""
     ignore_flag = ""
