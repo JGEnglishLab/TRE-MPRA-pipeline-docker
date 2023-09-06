@@ -18,6 +18,7 @@ parser.add_argument("-dt", required=False, help=ht.dt())
 parser.add_argument("-s", required=False, help=ht.s())
 parser.add_argument("-sr", required=False, help=ht.sr())
 parser.add_argument("-d", required=False, help=ht.d())
+parser.add_argument("-i", required=False, help=ht.i())
 parser.add_argument("-n", required=False, help=ht.n())
 parser.add_argument("--sudo", action="store_true", help=ht.sudo())
 
@@ -30,6 +31,7 @@ treatment_tsv_path = vars(args)["t"]
 dna_tsv_path = vars(args)["dt"]
 pattern = vars(args)["sr"]
 dna_path = vars(args)["d"]
+ignore_path = vars(args)["i"]
 spike_path = vars(args)["s"]
 threads = vars(args)["n"]
 
@@ -124,6 +126,19 @@ else:
     spike_mount = ""
     spike_flag = ""
 
+# Check ignore_file path
+if ignore_path:
+    if not os.path.exists(ignore_path):
+        print("path to ignore file (-i) doesn't exist")
+        exit()
+    else:
+        ignore_path = os.path.abspath(ignore_path)
+        ignore_mount = f"-v {ignore_path}:/mydata/ignore.txt"
+        ignore_flag = "-s /mydata/ignore.txt"
+else:
+    ignore_mount = ""
+    ignore_flag = ""
+
 if pattern:
     pattern_flag = f"-sr {pattern}"
 else:
@@ -133,9 +148,9 @@ else:
 command = (
     f"{sudo_option} docker run -i -v "
     f"{emp_output}:/app/runs -v {fastq_path}:/mydata/fq_files -v {treatment_tsv_path}:/mydata/treatements.tsv "
-    f"{dna_tsv_mount} {spike_mount} {dna_fq_mount} "
+    f"{dna_tsv_mount} {spike_mount} {ignore_mount} {dna_fq_mount} "
     f"samhimes92/tmp TMP_empirical.py -f /mydata/fq_files -t /mydata/treatements.tsv "
-    f"{dna_tsv_flag} {spike_flag} {dna_fq_flag} {pattern_flag} {dir_name} {thread_flag}"
+    f"{dna_tsv_flag} {spike_flag} {ignore_flag} {dna_fq_flag} {pattern_flag} {dir_name} {thread_flag}"
 )
 print(command)
 os.system(command)
