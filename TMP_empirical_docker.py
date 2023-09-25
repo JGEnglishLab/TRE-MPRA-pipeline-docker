@@ -144,7 +144,6 @@ if pattern:
 else:
     pattern_flag = ""
 
-
 command = (
     f"{sudo_option} docker run -i -v "
     f"{emp_output}:/app/runs -v {fastq_path}:/mydata/fq_files -v {treatment_tsv_path}:/mydata/treatements.tsv "
@@ -153,4 +152,8 @@ command = (
     f"{dna_tsv_flag} {spike_flag} {ignore_flag} {dna_fq_flag} {pattern_flag} {dir_name} {thread_flag}"
 )
 print(command)
+os.system(f"rm -r {emp_output}trimmed_files")
+
+
 os.system(command)
+
