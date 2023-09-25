@@ -152,8 +152,5 @@ command = (
     f"{dna_tsv_flag} {spike_flag} {ignore_flag} {dna_fq_flag} {pattern_flag} {dir_name} {thread_flag}"
 )
 print(command)
-os.system(f"rm -r {emp_output}trimmed_files")
-
-
 os.system(command)
 
