@@ -160,38 +160,6 @@ def p():
     e.g. "-p ../pairwise_comparisons.tsv"
     """
 
-
-def m():
-    return """
-    Takes a path to a tsv file containing multivariate comparisons
-    The path may be absolute or direct
-    If this flag is left blank TMP_comparative.py will ask for user input to create the TSV
-    If you make your own tsv you must use this header 
-
-    id	treatment	run 
-    
-    The id column should be used to specify the multivariate comparisons, for example if you 
-    wanted to compare treatments A, B and C against each other, you would give them all the same id - See example below
-
-
-    id	treatment	run
-    1	Marin-1	20250
-    1	Marin-2	20250
-    1	Marin-3	20250
-    2	Serum Free	19664
-    2	ADRB2-2	20250
-    2	ADRB2-5	20250
-    3	Serum Free	19664
-    3	ADRB2-5	20250
-    3	Marin-3	20250
-    3	FBS	19664
-
-    e.g. "-m ../multi_comparisons.tsv"
-    """
-
-
-
-
 def sudo():
     return"""
     Set this flag if you need to sudo permission to run docker 
@@ -213,15 +181,6 @@ def po():
     If not provided, results will be written to current working directory
 
     e.g. "-po ../my_pairwise_results/
-    """
-
-def mo():
-    return"""
-    Takes a path to a directory where you want the multivariate results to be written
-    The path can be absolute or direct
-    If not provided, results will be written to current working directory
-    
-    e.g. "-mo ../my_multi_results/"
     """
 
 def r_comparative_docker():
