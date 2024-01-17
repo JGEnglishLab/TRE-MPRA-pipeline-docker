@@ -1,0 +1,73 @@
+MERGE_DIR = "merged_files/"
+TRIM_DIR = "trimmed_files/"
+JOIN_DIR = "joined_files/"
+STARCODE_DIR = "star_code/"
+SCRIPTS_DIR = "../../scripts/"
+BARCODE_MAP_DIR = "../../barcode_map_data/"
+DESCRIPTIVE_STATS_DIR = "run_stats/"
+RAW_COUNTS = "raw_counts/"
+
+
+rule run_quantitative_analysis:
+	message: "Creating stats about run and running MPRAnalyze"
+	input: 
+		sc = dynamic(STARCODE_DIR + "analyzed_out_sample{n3}_mapped_sc_out.tsv"),
+		md = "metaData.tsv",
+		bcm = BARCODE_MAP_DIR + "finalBarcodeMap.csv"
+	output: 
+		DESCRIPTIVE_STATS_DIR + "filtering_ratios.png",
+		DESCRIPTIVE_STATS_DIR + "type_ratios.png",
+		DESCRIPTIVE_STATS_DIR + "dna_per_barcode.png",
+		DESCRIPTIVE_STATS_DIR + "pre_filter_data.csv",
+		DESCRIPTIVE_STATS_DIR + "run_summary.csv",
+		"example__empirical_results.csv",
+		"MPRA_data.csv"
+
+	shell: "Rscript " + SCRIPTS_DIR + "run_quantitative_analysis_SM.R {input.md} {input.bcm} None /mydata/dna_map.tsv 6 {input.sc}"
+
+rule analyze_starcode:
+	message: "Analyzing Starcode"
+	input: dynamic(STARCODE_DIR + "sample{n2}_mapped_sc_out.tsv")
+	output: dynamic(STARCODE_DIR + "analyzed_out_sample{n3}_mapped_sc_out.tsv")
+	shell: "python3 " + SCRIPTS_DIR + "analyze_star_code_SM.py {input}"
+
+rule run_starcode:
+	message: "Running Star Code"
+	input: dynamic(STARCODE_DIR + "sample{n1}_mapped.tsv")
+	output: dynamic(STARCODE_DIR + "sample{n2}_mapped_sc_out.tsv")
+	shell: "bash " + SCRIPTS_DIR + "starcode_SM.sh"
+
+rule make_starcode_input:
+	message: "Processing input csv's before starcode"
+	input: 
+		md = "metaData.tsv",
+		bcm = BARCODE_MAP_DIR + "finalBarcodeMap.csv",
+		rc = dynamic(RAW_COUNTS + "{n0}.csv")
+	output: dynamic(STARCODE_DIR + "sample{n1}_mapped.tsv")
+	shell: "Rscript " + SCRIPTS_DIR + "pre_process_SM.R {input.md} {input.bcm}"
+
+
+rule count_barcodes:
+	message: "Counting Barcodes"
+	input: "fastqs_joined.txt"
+	output: dynamic(RAW_COUNTS + "{n0}.csv")
+	run: 
+	    shell("python3 " + SCRIPTS_DIR + "count_barcodes_SM.py file_info.csv")
+	    shell("touch barcodes_counted.txt") 
+	
+rule join_fastqs:
+	message: "Joining Fastq's"
+	output: "fastqs_joined.txt"
+	input: "fastqs_trimmed.txt"
+	run: 
+		shell("python3 " + SCRIPTS_DIR + "fastq_join_SM.py")
+		shell("touch fastqs_joined.txt")
+
+rule trim_fastqs:
+	message: "Trimming Fastq's"
+	input: "file_info.csv"
+	output: "fastqs_trimmed.txt"
+	run: 
+		shell("python3 " + SCRIPTS_DIR + "fastq_trim_SM.py file_info.csv")
+		shell("touch fastqs_trimmed.txt")
+	

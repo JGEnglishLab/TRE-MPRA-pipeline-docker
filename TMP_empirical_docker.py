@@ -6,6 +6,8 @@ import help_txt as ht
 
 cwd = os.getcwd()
 
+CONTAINER_ID = "samhimes92/tmp"
+
 parser = argparse.ArgumentParser(
     formatter_class=RawTextHelpFormatter, description="Runs Docker container"
 )
@@ -148,9 +150,14 @@ command = (
     f"{sudo_option} docker run -i -v "
     f"{emp_output}:/app/runs -v {fastq_path}:/mydata/fq_files -v {treatment_tsv_path}:/mydata/treatements.tsv "
     f"{dna_tsv_mount} {spike_mount} {ignore_mount} {dna_fq_mount} "
-    f"samhimes92/tmp TMP_empirical.py -f /mydata/fq_files -t /mydata/treatements.tsv "
+    f"{CONTAINER_ID} TMP_empirical.py -f /mydata/fq_files -t /mydata/treatements.tsv "
     f"{dna_tsv_flag} {spike_flag} {ignore_flag} {dna_fq_flag} {pattern_flag} {dir_name} {thread_flag}"
 )
 print(command)
 os.system(command)
+
+print("Finished")
+print("Removing Docker Image")
+remove_command = f'docker rm $(docker stop $(docker ps -a -q --filter ancestor={CONTAINER_ID} --format="{{{{.ID}}}}")) '
+os.system(remove_command)
 

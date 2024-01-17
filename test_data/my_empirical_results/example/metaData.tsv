@@ -1,0 +1,17 @@
+sampleNumber	lane	fileName	treatment	run_name	long_name	concentration	time	cell_type	tag	anonymous_name	merged
+1	1	run1X1_220401_A00421_0429_AH3JCHDRX2_S1_L002_R1_001_subset.csv	SerumFree	example	None	None	None	None	None	None	1_1
+1	2	run1X1_220401_A00421_0429_AH3JCHDRX2_S1_L001_R1_001_subset.csv	SerumFree	example	None	None	None	None	None	None	1_2
+2	1	run1X2_220401_A00421_0429_AH3JCHDRX2_S2_L002_R1_001_subset.csv	SerumFree	example	None	None	None	None	None	None	2_1
+2	2	run1X2_220401_A00421_0429_AH3JCHDRX2_S2_L001_R1_001_subset.csv	SerumFree	example	None	None	None	None	None	None	2_2
+3	1	run1X3_220401_A00421_0429_AH3JCHDRX2_S3_L001_R1_001_subset.csv	SerumFree	example	None	None	None	None	None	None	3_1
+3	2	run1X3_220401_A00421_0429_AH3JCHDRX2_S3_L002_R1_001_subset.csv	SerumFree	example	None	None	None	None	None	None	3_2
+5	1	run1X5_220401_A00421_0429_AH3JCHDRX2_S5_L001_R1_001_subset.csv	FBS	example	None	None	None	None	None	None	5_1
+5	2	run1X5_220401_A00421_0429_AH3JCHDRX2_S5_L002_R1_001_subset.csv	FBS	example	None	None	None	None	None	None	5_2
+6	1	run1X6_220401_A00421_0429_AH3JCHDRX2_S6_L001_R1_001_subset.csv	FBS	example	None	None	None	None	None	None	6_1
+6	2	run1X6_220401_A00421_0429_AH3JCHDRX2_S6_L002_R1_001_subset.csv	FBS	example	None	None	None	None	None	None	6_2
+8	1	run1X8_220722_A00421_0459_AHH3JFDRX2_S8_L002_R1-2_001_subset_join.csv	Dexamethasone	example	None	None	None	None	None	None	8_1
+8	2	run1X8_220722_A00421_0459_AHH3JFDRX2_S8_L001_R1-2_001_subset_join.csv	Dexamethasone	example	None	None	None	None	None	None	8_2
+42	1	run1X42_220722_A00421_0459_AHH3JFDRX2_S42_L002_R1-2_001_subset_join.csv	DNA	example	None	None	None	None	None	None	42_1
+42	2	run1X42_220722_A00421_0459_AHH3JFDRX2_S42_L001_R1-2_001_subset_join.csv	DNA	example	None	None	None	None	None	None	42_2
+43	1	run1X43_220722_A00421_0459_AHH3JFDRX2_S43_L002_R1-2_001_subset_join.csv	DNA	example	None	None	None	None	None	None	43_1
+43	2	run1X43_220722_A00421_0459_AHH3JFDRX2_S43_L001_R1-2_001_subset_join.csv	DNA	example	None	None	None	None	None	None	43_2

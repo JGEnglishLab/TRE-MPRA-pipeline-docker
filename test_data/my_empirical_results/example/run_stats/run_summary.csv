@@ -1,0 +1,9 @@
+sample_number,treatment,totalReads,totalBarcodes,includedReads,includedBarcodes,spikeInCount,spike,spike_percent
+1,SerumFree,108450,5018,108343,5014,NA,NA,NA
+2,SerumFree,107229,4953,107114,4950,NA,NA,NA
+3,SerumFree,118174,5205,118032,5201,NA,NA,NA
+42,DNA,473,399,473,399,NA,NA,NA
+43,DNA,397,357,397,357,NA,NA,NA
+5,FBS,135619,5151,135427,5147,NA,NA,NA
+6,FBS,171224,5043,170945,5039,NA,NA,NA
+8,Dexamethasone,285,200,282,197,NA,NA,NA

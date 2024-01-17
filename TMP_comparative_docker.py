@@ -6,6 +6,8 @@ import help_txt as ht
 
 cwd = os.getcwd()
 
+CONTAINER_ID = "samhimes92/tmp"
+
 parser = argparse.ArgumentParser(
     formatter_class=RawTextHelpFormatter, description="Runs Docker container"
 )
@@ -76,8 +78,15 @@ command = (
     f"{sudo_option} docker run -i "
     f"-v {pairwise_output}:/app/pairwise_results -v {runs_dir}:/mydata/runs "
     f"{pairwise_tsv_mount} "
-    f"samhimes92/tmp TMP_comparative.py -r /mydata/runs/ "
+    f"{CONTAINER_ID} TMP_comparative.py -r /mydata/runs/ "
     f"{pairwise_tsv_flag} {thread_flag}"
 )
+
+
 print(command)
 os.system(command)
+
+print("Finished")
+print("Removing Docker Image")
+remove_command = f'docker rm $(docker stop $(docker ps -a -q --filter ancestor={CONTAINER_ID} --format="{{{{.ID}}}}")) '
+os.system(remove_command)

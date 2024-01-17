@@ -1,0 +1,5 @@
+treatment,run_name,long_name,cell_type,concentration,time,tag,anonymous_name
+SerumFree,example,None,None,None,None,None,None
+FBS,example,None,None,None,None,None,None
+Dexamethasone,example,None,None,None,None,None,None
+DNA,example,None,None,None,None,None,None
